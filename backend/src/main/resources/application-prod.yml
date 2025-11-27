@@ -1,0 +1,96 @@
+spring:
+  application:
+    name: agent-scanner-gateway
+  
+  # 数据库配置 - 生产环境
+  datasource:
+    url: jdbc:mysql://db-server:3306/agent_scanner?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  
+  # SQL初始化配置 - 生产环境禁用
+  sql:
+    init:
+      enabled: false
+  
+  # Redis配置 - 生产环境
+  data:
+    redis:
+      host: redis-server
+      port: 6379
+      password: redis_secure_password
+      database: 0
+      timeout: 3000
+  
+  # RabbitMQ配置 - 生产环境
+  rabbitmq:
+    host: rabbitmq-server
+    port: 5672
+    username: agent_scanner
+    password: rabbitmq_secure_password
+    virtual-host: /agent_scanner
+    connection-timeout: 3000
+  
+  # 安全配置 - 生产环境
+  security:
+    user:
+      name: admin
+      password: $2a$10$7J6K5L4M3N2O1P0Q9R8S7T6U5V4W3X2Y1Z0A9B8C7D6E5F4G3H2I1J
+
+# MyBatis Plus配置 - 生产环境禁用SQL日志
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.agentscanner.gateway.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+# 服务器配置 - 生产环境
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    session:
+      timeout: 3600s
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 20
+    connection-timeout: 30000
+
+# Swagger配置 - 生产环境禁用
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+# JWT配置 - 生产环境使用强密钥
+jwt:
+  secret: agent-scanner-gateway-production-secret-key-2024-01-01
+  expiration: 86400000
+
+# Nginx配置 - 生产环境
+nginx:
+  conf-path: /usr/local/nginx/conf/nginx.conf
+  reload-command: /usr/local/nginx/sbin/nginx -s reload
+  lua-script-path: /usr/local/nginx/lua/
+
+# 日志配置 - 生产环境
+logging:
+  level:
+    root: WARN
+    com.agentscanner: INFO
+    org.springframework.security: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /var/log/agent-scanner/gateway.log
+    max-size: 10MB
+    max-history: 30

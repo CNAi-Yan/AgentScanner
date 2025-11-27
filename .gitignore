@@ -1,0 +1,56 @@
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Java项目
+backend/target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Spring Boot
+*.pid
+*.seed
+
+# Vue项目
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# Nginx
+nginx/logs/
+nginx/temp/
+
+# 敏感文件
+*.properties
+*.yml
+*.yaml
+!application.yml
+!application-prod.yml
+
+# 测试报告
+coverage/
+.nyc_output/
+
+# 其他
+*.bak
+*.tmp
+*.cache
+
+#TRAE
+.trae

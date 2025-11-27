@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: agent-scanner-gateway
+  
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/agent_scanner?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # SQL初始化配置
+  sql:
+    init:
+      enabled: false
+      schema-locations: classpath:db/init.sql
+      mode: never
+  
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 
+      database: 0
+  
+  # RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  
+  # 安全配置
+  security:
+    user:
+      name: admin
+      password: admin
+
+# MyBatis Plus配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.agentscanner.gateway.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 服务器配置
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# Swagger配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# JWT配置
+jwt:
+  secret: agent-scanner-gateway-secret-key
+  expiration: 86400000
+
+# Nginx配置
+nginx:
+  conf-path: /usr/local/nginx/conf/nginx.conf
+  reload-command: /usr/local/nginx/sbin/nginx -s reload
+  lua-script-path: /usr/local/nginx/lua/
